@@ -11,7 +11,7 @@ class first_ord_w_delay_Design:
 
     def __init__(self, engine='gpt-4o-2024-08-06', temperature=0.0, max_tokens=1024):
         self.gpt4 = GPT4(engine=engine, temperature=temperature, max_tokens=max_tokens)
-        self.max_attempts = 10
+        self.max_attempts = 3
         self.design_memory = design_memory()
         self.base_output_dir = "./outputs"
 
@@ -46,7 +46,9 @@ class first_ord_w_delay_Design:
             # parameters for plant transfer function
             num = [system['num'][0]]
             den = system['den']
-            tau = system['tau']
+            # zz: I think this should be a bug, the dataset doesn't have this parameter
+            tau = 0.038
+            # tau = system['tau']
 
             # Extract the list of parameters
             parameters = data['parameter']

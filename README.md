@@ -11,17 +11,20 @@ This paper develops an agent for control design. In the paper, we have not inclu
 1. Update the model invocation method by switching from the OpenAI API to local inference using Qwen-1.5B. ✅
 2. Implement evaluation scripts to aggregate output results for ASR performance testing. ✅
 
-2️⃣ For the Task 2
-1. Identify areas where the 1.5B LLM underperforms across control and task-specific agents, then analyze the failure causes. 
-2. Focus on fine-tuning or prompt weaknesses to improve performance.
+2️⃣ For the Task 2 \
+For improvement, this should be broken down into two points:
+1. Where does the 1.5B LLM underperform? Analyze which parts lead to failure and why.
+2. Based on that analysis, consider targeted solutions—such as fine-tuning or prompt engineering.
 
-2️⃣ For the Task 3 
+3️⃣ For the Task 3 
 1. Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
 
 ## Key Report
 **2025/4/8 16:00**: Save the final results in `save_result.py` and compute ASR metric in `asr_computing.py`. \
 **2025/4/8 16:52**: Replace the OpenAI API call inside the class GPT4 with a local inference of the Qwen-1.5B LLM using Transformers. However, due to the limited capabilities, it struggles to follow the predefined prompts and frequently produces errors, making it difficult to complete a full performance evaluation. such as `"parameter": [ω_L, β_b]`, `"design": " \\ comment`, `"parameter": [, ]`. \
 **2025/4/8 18:42**: Used Outlines to constrain the model’s output, designed a schema, and modified parts of the parameter-passing process to ensure error-free execution. Due to the limited capabilities of the 1.5B LLM, the output needs to be tightly constrained.
+**2025/4/8 19:45**: It's very slow, It takes about an hour to run a dozen or so pieces of data, for two reasons: 1. outlines wraps a layer. 2. almost every piece of data has to be tried the maximum number of times. Reduce the maximum number of attempts.
+**2025/4/8 22:25**: Get fist order stable result in `first_order_stable_fast_data_final_result.csv`. We get ASR 0.14. Complete log in `1-5B-llm.log`
 
 ## Originality
 

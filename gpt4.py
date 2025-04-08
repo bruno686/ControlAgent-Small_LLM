@@ -40,4 +40,5 @@ class GPT4:
         full_prompt = f"<|im_start|>system\n{system_prompt}<|im_end|>\n<|im_start|>user\n{user_prompt}<|im_end|>\n<|im_start|>assistant\n"
         generator = outlines.generate.json(self.model, schema)
         response = generator(full_prompt)
+        print(response)
         return response

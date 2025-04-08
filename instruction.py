@@ -225,7 +225,8 @@ response_format_PI_schema = '''{
         "design": {
             "title": "Design",
             "type": "string",
-            "description": "Detailed design steps and rationale behind parameters choice, or the reason to update specific parameter based on the previous design and performance."
+            "description": "Detailed design steps and rationale behind parameters choice, or the reason to update specific parameter based on the previous design and performance.",
+            "minLength": 30
         },
         "parameter": {
             "title": "Parameter",

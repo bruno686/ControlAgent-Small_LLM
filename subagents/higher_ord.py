@@ -12,7 +12,7 @@ class higher_ord_Design:
 
     def __init__(self, engine='gpt-4o-2024-08-06', temperature=0.0, max_tokens=1024):
         self.gpt4 = GPT4(engine=engine, temperature=temperature, max_tokens=max_tokens)
-        self.max_attempts = 10
+        self.max_attempts = 3
         self.design_memory = design_memory()
         self.base_output_dir = "./outputs"
     
@@ -49,6 +49,7 @@ class higher_ord_Design:
                 "Response": response
             })
 
+            response = json.dumps(response)
             data = json.loads(response)
 
             # Extract the list of parameters
