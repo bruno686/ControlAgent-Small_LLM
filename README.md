@@ -19,7 +19,8 @@ This paper develops an agent for control design. In the paper, we have not inclu
 1. Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
 
 ## Key Report
-2025/4/8 16:00: Save the final results in `save_result.py` and compute ASR metric in `asr_computing.py`. 
+2025/4/8 16:00: Save the final results in `save_result.py` and compute ASR metric in `asr_computing.py`. \
+2025/4/8 16:52: Replace the OpenAI API call inside the class GPT4 with a local inference of the Qwen-1.5B LLM using Transformers. However, due to the limited capabilities, it struggles to follow the predefined prompts and frequently produces errors, making it difficult to complete a full performance evaluation. such as `"parameter": [ω_L, β_b]`, `"design": " \\ comment`, `"parameter": [, ]`.
 
 
 ## Originality
