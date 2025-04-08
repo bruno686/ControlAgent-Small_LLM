@@ -12,11 +12,11 @@ This paper develops an agent for control design. In the paper, we have not inclu
 2. Implement evaluation scripts to aggregate output results for SAR performance testing. 
 
 2️⃣ For the Task 2
-1. Identify areas where the 1.5B LLM underperforms across control and task-specific agents, then analyze the failure causes. 
-2. Focus on fine-tuning or prompt weaknesses to improve performance.
+3. Identify areas where the 1.5B LLM underperforms across control and task-specific agents, then analyze the failure causes. 
+4. Focus on fine-tuning or prompt weaknesses to improve performance.
 
 2️⃣ For the Task 3
-1. Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
+5. Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
 
 ## Key Report
 
