@@ -22,8 +22,8 @@ For improvement, this should be broken down into two points:
 ## Key Report
 **2025/4/8 16:00**: Save the final results in `save_result.py` and compute ASR metric in `asr_computing.py`. \
 **2025/4/8 16:52**: Replace the OpenAI API call inside the class GPT4 with a local inference of the Qwen-1.5B LLM using Transformers. However, due to the limited capabilities, it struggles to follow the predefined prompts and frequently produces errors, making it difficult to complete a full performance evaluation. such as `"parameter": [ω_L, β_b]`, `"design": " \\ comment`, `"parameter": [, ]`. \
-**2025/4/8 18:42**: Used Outlines to constrain the model’s output, designed a schema, and modified parts of the parameter-passing process to ensure error-free execution. Due to the limited capabilities of the 1.5B LLM, the output needs to be tightly constrained.
-**2025/4/8 19:45**: It's very slow, It takes about an hour to run a dozen or so pieces of data, for two reasons: 1. outlines wraps a layer. 2. almost every piece of data has to be tried the maximum number of times. Reduce the maximum number of attempts.
+**2025/4/8 18:42**: Used Outlines to constrain the model’s output, designed a schema, and modified parts of the parameter-passing process to ensure error-free execution. Due to the limited capabilities of the 1.5B LLM, the output needs to be tightly constrained. \
+**2025/4/8 19:45**: It's very slow, It takes about an hour to run a dozen or so pieces of data, for two reasons: 1. outlines wraps a layer. 2. almost every piece of data has to be tried the maximum number of times. Reduce the maximum number of attempts. \
 **2025/4/8 22:25**: Get fist order stable result in `first_order_stable_fast_data_final_result.csv`. We get ASR 0.14. Complete log in `1-5B-llm.log`
 
 ## Originality
