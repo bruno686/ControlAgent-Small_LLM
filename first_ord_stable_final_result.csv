@@ -1,0 +1,6 @@
+is_succ,parameters,performance,conversation_rounds
+True,"{'omega_L': 2.5, 'beta_b': 3.1623}","{'phase_margin': np.float64(81.3110137872705), 'settling_time_min': np.float64(3.474079185044324), 'settling_time_max': np.float64(3.474079185044324), 'steadystate_error': np.float64(0.0)}",3
+True,"{'omega_L': 145.5, 'beta_b': 3.16}","{'phase_margin': np.float64(78.15045567197399), 'settling_time_min': np.float64(0.06344776649117813), 'settling_time_max': np.float64(0.06344776649117813), 'steadystate_error': np.float64(0.0)}",1
+True,"{'omega_L': 1000, 'beta_b': 3.16}","{'phase_margin': np.float64(73.50547603687926), 'settling_time_min': np.float64(0.009474021207479762), 'settling_time_max': np.float64(0.009474021207479762), 'steadystate_error': np.float64(0.0)}",1
+True,"{'omega_L': 100, 'beta_b': 4.0}","{'phase_margin': np.float64(82.23262188515491), 'settling_time_min': np.float64(0.09885959104054623), 'settling_time_max': np.float64(0.09885959104054623), 'steadystate_error': np.float64(0.0)}",2
+True,"{'omega_L': 90, 'beta_b': 6.0}","{'phase_margin': np.float64(85.06633302947932), 'settling_time_min': np.float64(0.12170578449219502), 'settling_time_max': np.float64(0.12170578449219502), 'steadystate_error': np.float64(0.0)}",6
