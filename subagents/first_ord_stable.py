@@ -4,6 +4,7 @@ from util import feedback_prompt, check_stability, loop_shaping
 from DesignMemory import design_memory
 from instruction import overall_instruction_PI, response_format_PI
 import os
+from save_result import save_result
 
 class first_ord_stable_Design:
 
@@ -127,6 +128,7 @@ class first_ord_stable_Design:
         # Extract the list of parameters
         parameters = data['parameter']
         
-        # Parse and return the JSON response
+        current_filename = os.path.splitext(os.path.basename(__file__))[0]
+        save_result(final_result, current_filename)
         return final_result
 

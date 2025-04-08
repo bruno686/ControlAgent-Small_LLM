@@ -4,7 +4,7 @@ from util import loop_shaping, feedback_prompt, check_stability
 from instruction import overall_instruction_RHP_Pole_PI, response_format_PI
 from DesignMemory import design_memory
 import os
-
+from save_result import save_result
 
 class first_ord_unstable_Design:
 
@@ -127,5 +127,7 @@ class first_ord_unstable_Design:
         parameters = data['parameter']
         
         # Parse and return the JSON response
+        current_filename = os.path.splitext(os.path.basename(__file__))[0]
+        save_result(final_result, current_filename)
         return final_result
 

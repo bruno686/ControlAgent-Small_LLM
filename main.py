@@ -9,15 +9,16 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--engine', type=str, default='gpt-4o-2024-08-06')
     parser.add_argument('--dataset_dir', type=str, default="./ControlEval/")
-    parser.add_argument('--dataset_files', nargs='+', help='List of dataset file names', default=None)
+    # zz: test all files is None
+    parser.add_argument('--dataset_files', nargs='+', help='List of dataset file names', default=['first_order_stable_fast_data.json'])
     args = parser.parse_args()
     return args
 
 def process_dataset(file_path):
     with open(file_path, 'r') as f:
         dataset = json.load(f)
-    
-    for system in dataset[0:2]:  # Loop through first two systems; adjust as necessary
+    # zz: we need get all data
+    for system in dataset:  # Loop through first two systems; adjust as necessary
         scenario = system['scenario']
         # Provide the plant transfer function
         num = [system['num'][0]]
