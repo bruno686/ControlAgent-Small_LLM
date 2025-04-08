@@ -7,16 +7,16 @@ This paper develops an agent for control design. In the paper, we have not inclu
 3. Does your method generalize to other engineering design problems? Say circuit design? (https://arxiv.org/pdf/2405.14918) Github:https://github.com/laiyao1/AnalogCoder
 
 ## My Plan
-1️⃣ For the Task 1
+1️⃣ For the Task 1 
 1. Update the model invocation method by switching from the OpenAI API to local inference using Qwen-1.5B with Hugging Face Transformers.
 2. Implement evaluation scripts to aggregate output results for SAR performance testing. 
 
 2️⃣ For the Task 2
-3. Identify areas where the 1.5B LLM underperforms across control and task-specific agents, then analyze the failure causes. 
-4. Focus on fine-tuning or prompt weaknesses to improve performance.
+1. Identify areas where the 1.5B LLM underperforms across control and task-specific agents, then analyze the failure causes. 
+1. Focus on fine-tuning or prompt weaknesses to improve performance.
 
-2️⃣ For the Task 3
-5. Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
+2️⃣ For the Task 3 
+1. Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
 
 ## Key Report
 
