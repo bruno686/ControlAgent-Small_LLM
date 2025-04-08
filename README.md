@@ -8,15 +8,15 @@ This paper develops an agent for control design. In the paper, we have not inclu
 
 ## My Plan
 1️⃣ For the Task 1 
-1. Update the model invocation method by switching from the OpenAI API to local inference using Qwen-1.5B. ✅
-2. Implement evaluation scripts to aggregate output results for ASR performance testing. ✅
+- [x] : Update the model invocation method by switching from the OpenAI API to local inference using Qwen-1.5B.
+- [x] : Implement evaluation scripts to aggregate output results for ASR performance testing.
 
 2️⃣ For the Task 2 
-1. Where does the 1.5B LLM underperform? Analyze which parts lead to failure and why. ✅ (It failed to correctly grasp fundamental concepts in automating control)
-2. Based on that analysis, consider targeted solutions—such as fine-tuning or prompt engineering.
+- [x] : Where does the 1.5B LLM underperform? Analyze which parts lead to failure and why.  (It failed to correctly grasp fundamental concepts in automating control)
+- [ ] : Based on that analysis, consider targeted solutions—such as fine-tuning or prompt engineering.
 
 3️⃣ For the Task 3 
-1. Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
+- [ ] : Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
 
 ## Key Report 
 ------------------------------------------Task 1------------------------------------------ \
