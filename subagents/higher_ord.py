@@ -1,18 +1,18 @@
 from gpt4 import GPT4
 import json
 from util import loop_shaping, feedback_prompt, check_stability_pid
-from instruction import response_format_PID, overall_instruction_PID, overall_instruction_RHP_Pole_higherorder_PID
+from instruction import response_format_PID, overall_instruction_PID, overall_instruction_RHP_Pole_higherorder_PID, response_format_PID_schema
 from DesignMemory import design_memory
 import control as ctrl
 import numpy as np
 import os
-
+from save_result import save_result
 
 class higher_ord_Design:
 
     def __init__(self, engine='gpt-4o-2024-08-06', temperature=0.0, max_tokens=1024):
         self.gpt4 = GPT4(engine=engine, temperature=temperature, max_tokens=max_tokens)
-        self.max_attempts = 30
+        self.max_attempts = 10
         self.design_memory = design_memory()
         self.base_output_dir = "./outputs"
     
@@ -42,7 +42,7 @@ class higher_ord_Design:
         while num_attempt <= self.max_attempts:
             print(f"Iteration {num_attempt} for system {system['id']} scenario {scenario}\n")
             # Call GPT4 to complete the prompt
-            response = self.gpt4.complete(problem_statement)
+            response = self.gpt4.complete(problem_statement, response_format_PID_schema)
 
             conversation_log.append({
                 "Problem Statement": problem_statement,
@@ -134,5 +134,6 @@ class higher_ord_Design:
         # Extract the list of parameters
         parameters = data['parameter']
         
-        # Parse and return the JSON response
+        current_filename = 'first_order_stable_fast_data'
+        save_result(final_result, current_filename)
         return final_result

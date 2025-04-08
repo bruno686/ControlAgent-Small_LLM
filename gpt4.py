@@ -2,6 +2,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import json
 import openai
+import outlines
+from outlines.models.transformers import Transformers
+
 
 class GPT4:
 
@@ -13,60 +16,28 @@ class GPT4:
         self.temperature = temperature
         self.rstrip = rstrip
         self.engine = engine  
-        model_name = "/home/kaiyu/cheers/LLMs/qwen2.5-1.5b-instruct"
+        # self.model = outlines.models.transformers("../LLMs/qwen2.5-1.5b-instruct", device_map="cuda", )
 
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForCausalLM.from_pretrained(
-            model_name,
-            torch_dtype="auto",
-            device_map="auto"
+        self.tokenizer = AutoTokenizer.from_pretrained("../LLMs/qwen2.5-1.5b-instruct", trust_remote_code=True)
+        self.base_model = AutoModelForCausalLM.from_pretrained(
+            "../LLMs/qwen2.5-1.5b-instruct",
+            trust_remote_code=True,
+            torch_dtype=torch.float16,   # 推荐 float16 节省显存
+            device_map="cuda"            # 自动分配到 GPU
         )
 
-    def complete(self, prompt):
+        # Wrap with outlines
+        self.model = Transformers(self.base_model, self.tokenizer)
+
+    def complete(self, prompt, schema):
         if self.rstrip:
             prompt = prompt.rstrip()
 
-        messages = [
-            {
-                "role": "system",
-                "content": (
-                    "You are an expert in control engineering design. "
-                    "Respond only using a valid object. "
-                    "For example: {\"response\": \"your answer here\"}"
-                )
-            },
-            {"role": "user", "content": prompt}
-        ]
+        system_prompt = "You are an expert in control engineering design."
+        user_prompt = prompt
 
-        text = self.tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True
-        )
-
-        model_inputs = self.tokenizer([text], return_tensors="pt").to(self.model.device)
-
-        # temperature = max(self.temperature, 1e-5)
-        # do_sample = self.temperature > 0.0
-
-        generated_ids = self.model.generate(
-            **model_inputs,
-            max_new_tokens=self.max_tokens,
-            # temperature=temperature,
-            do_sample=False
-        )
-
-        generated_ids = [
-            output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
-        ]
-
-        response = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
-
-        # # 打印 response 进行调试
-        # print("Response:", response)
-        # print("Response Type:", type(response))
-
-        # 删除可能存在的 ```json 标记
-        response = response.replace("```json", "").replace("```", "").strip()
-        print(response)
+        # Qwen2-Chat uses this format
+        full_prompt = f"<|im_start|>system\n{system_prompt}<|im_end|>\n<|im_start|>user\n{user_prompt}<|im_end|>\n<|im_start|>assistant\n"
+        generator = outlines.generate.json(self.model, schema)
+        response = generator(full_prompt)
         return response

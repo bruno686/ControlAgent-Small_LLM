@@ -3,14 +3,15 @@ import json
 import argparse
 from central_agent import CentralAgentLLM
 import os
-from instruction import central_agent_prompt, response_instruct
+from instruction import central_agent_prompt, response_instruct, response_instruct_schema
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--engine', type=str, default='gpt-4o-2024-08-06')
     parser.add_argument('--dataset_dir', type=str, default="./ControlEval/")
     # zz: test all files is None
-    parser.add_argument('--dataset_files', nargs='+', help='List of dataset file names', default=['first_order_stable_fast_data.json'])
+    parser.add_argument('--dataset_name', type=str, default="first_order_stable_fast_data")
+    parser.add_argument('--dataset_files', help='List of dataset file names', default=['first_order_stable_fast_data.json'])
     args = parser.parse_args()
     return args
 
@@ -56,12 +57,12 @@ def process_dataset(file_path):
             user_request = "\nPlease design the controller for the following system: " +  str(plant) + requirements_summary
 
         prompt = central_agent_prompt + user_request + response_instruct
-
+        schema = response_instruct_schema
         # Instantiate the central agent
         central_agent = CentralAgentLLM()
 
         # Assign task based on LLM output
-        response = central_agent.assign_task(system, prompt, thresholds, scenario)
+        response = central_agent.assign_task(system, prompt, schema, thresholds, scenario)
         print(f"Response for dataset {file_path} and system {system['scenario']}:\n{response}\n")
 
 if __name__ == "__main__":

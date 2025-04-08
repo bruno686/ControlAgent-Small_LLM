@@ -3,8 +3,8 @@ import json
 from DesignMemory import design_memory
 from util import loop_shaping_pid, feedback_prompt, check_stability_pid
 import os
-from instruction import overall_instruction_PID, response_format_PID
-
+from instruction import overall_instruction_PID, response_format_PID, response_format_PID_schema
+from save_result import save_result
 
 
 class second_ord_stable_Design:
@@ -31,13 +31,14 @@ class second_ord_stable_Design:
         while num_attempt <= self.max_attempts:
             print(f"Iteration {num_attempt} for system {system['id']} scenario {scenario}\n")
             # Call GPT4 to complete the prompt
-            response = self.gpt4.complete(problem_statement)
+            response = self.gpt4.complete(problem_statement, response_format_PID_schema)
 
             conversation_log.append({
                 "Problem Statement": problem_statement,
                 "Response": response
             })
 
+            response = json.dumps(response)
             data = json.loads(response)
 
             # parameters for plant transfer function
@@ -126,5 +127,6 @@ class second_ord_stable_Design:
         # Extract the list of parameters
         parameters = data['parameter']
         
-        # Parse and return the JSON response
+        current_filename = 'first_order_stable_fast_data'
+        save_result(final_result, current_filename)
         return final_result

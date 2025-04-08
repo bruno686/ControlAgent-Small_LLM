@@ -3,15 +3,15 @@ import json
 import sys
 from util import loop_shaping_w_delay, feedback_prompt, check_stability
 from DesignMemory import design_memory
-from instruction import overall_instruction_with_time_delay, response_format_PI
+from instruction import overall_instruction_with_time_delay, response_format_PI, response_format_PI_schema
 import os
-
+from save_result import save_result
 
 class first_ord_w_delay_Design:
 
     def __init__(self, engine='gpt-4o-2024-08-06', temperature=0.0, max_tokens=1024):
         self.gpt4 = GPT4(engine=engine, temperature=temperature, max_tokens=max_tokens)
-        self.max_attempts = 20
+        self.max_attempts = 10
         self.design_memory = design_memory()
         self.base_output_dir = "./outputs"
 
@@ -33,13 +33,14 @@ class first_ord_w_delay_Design:
         while num_attempt <= self.max_attempts:
             print(f"Iteration {num_attempt} for system {system['id']} scenario {scenario}\n")
             # Call GPT4 to complete the prompt
-            response = self.gpt4.complete(problem_statement)
+            response = self.gpt4.complete(problem_statement, response_format_PI_schema)
 
             conversation_log.append({
                 "Problem Statement": problem_statement,
                 "Response": response
             })
 
+            response = json.dumps(response)
             data = json.loads(response)
 
             # parameters for plant transfer function
@@ -129,5 +130,6 @@ class first_ord_w_delay_Design:
         # Extract the list of parameters
         parameters = data['parameter']
         
-        # Parse and return the JSON response
+        current_filename = 'first_order_stable_fast_data'
+        save_result(final_result, current_filename)
         return final_result

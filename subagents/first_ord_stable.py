@@ -2,7 +2,7 @@ from gpt4 import GPT4
 import json
 from util import feedback_prompt, check_stability, loop_shaping
 from DesignMemory import design_memory
-from instruction import overall_instruction_PI, response_format_PI
+from instruction import overall_instruction_PI, response_format_PI, response_format_PI_schema
 import os
 from save_result import save_result
 
@@ -33,13 +33,13 @@ class first_ord_stable_Design:
         while num_attempt <= self.max_attempts:
             print(f"Iteration {num_attempt} for system {system['id']}.\n")
             # Call GPT4 to complete the prompt
-            response = self.gpt4.complete(problem_statement)
+            response = self.gpt4.complete(problem_statement, response_format_PI_schema)
 
             conversation_log.append({
                 "Problem Statement": problem_statement,
                 "Response": response
             })
-
+            response = json.dumps(response)
             data = json.loads(response)
 
             # parameters for plant transfer function
@@ -128,7 +128,7 @@ class first_ord_stable_Design:
         # Extract the list of parameters
         parameters = data['parameter']
         
-        current_filename = os.path.splitext(os.path.basename(__file__))[0]
+        current_filename = 'first_order_stable_fast_data'
         save_result(final_result, current_filename)
         return final_result
 

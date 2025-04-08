@@ -41,6 +41,31 @@ Your response should strictly follow the JSON format below, containing three key
 
 """
 
+response_instruct_schema = '''{
+    "title": "Response",
+    "type": "object",
+    "properties": {
+        "Task Requirement": {
+            "title": "Task Requirement",
+            "type": "string",
+            "description": "Summarize the task requirements, including the system dynamics and performance criteria provided by the user."
+        },
+        "Task Analysis": {
+            "title": "Task Analysis",
+            "type": "string",
+            "description": "Provide a brief analysis of the system and justify the selection of the task-specific agent."
+        },
+        "Agent Number": {
+            "title": "Agent Number",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6,
+            "description": "Specify the task-specific agent number (choose from 1 to 6)."
+        }
+    },
+    "required": ["Task Requirement", "Task Analysis", "Agent Number"]
+}'''
+
 
 overall_instruction_PI = """
 
@@ -193,6 +218,29 @@ Example of expected JSON response format:
 
 """
 
+response_format_PI_schema = '''{
+    "title": "Controller Design Response",
+    "type": "object",
+    "properties": {
+        "design": {
+            "title": "Design",
+            "type": "string",
+            "description": "Detailed design steps and rationale behind parameters choice, or the reason to update specific parameter based on the previous design and performance."
+        },
+        "parameter": {
+            "title": "Parameter",
+            "type": "array",
+            "items": {
+                "type": "number"
+            },
+            "description": "List of numerical values of the chosen parameters [omega_L, beta_b].",
+            "minItems": 2,
+            "maxItems": 2
+        }
+    },
+    "required": ["design", "parameter"]
+}'''
+
 
 response_format_PID = """
 
@@ -207,6 +255,28 @@ Example of expected JSON response format:
 }
 
 """
+response_format_PID_schema = """{
+  "title": "PID Controller Design Response",
+  "type": "object",
+  "properties": {
+    "design": {
+      "title": "Design",
+      "type": "string",
+      "description": "Detailed design steps and rationale behind parameters choice or updates based on previous performance."
+    },
+    "parameter": {
+      "title": "Parameter",
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "description": "List of numerical values of the chosen parameters [omega_L, beta_b, beta_l].",
+      "minItems": 3,
+      "maxItems": 3
+    }
+  },
+  "required": ["design", "parameter"]
+}"""
 
 
 response_format_ablation_PI = """
@@ -224,7 +294,6 @@ Example of expected JSON response format:
 }
 
 """
-
 
 
 
