@@ -9,17 +9,17 @@ This paper develops an agent for control design. In the paper, we have not inclu
 ## My Plan
 1️⃣ For the Task 1 
 1. Update the model invocation method by switching from the OpenAI API to local inference using Qwen-1.5B with Hugging Face Transformers.
-2. Implement evaluation scripts to aggregate output results for SAR performance testing. 
+2. Implement evaluation scripts to aggregate output results for ASR performance testing. 
 
 2️⃣ For the Task 2
 1. Identify areas where the 1.5B LLM underperforms across control and task-specific agents, then analyze the failure causes. 
-1. Focus on fine-tuning or prompt weaknesses to improve performance.
+2. Focus on fine-tuning or prompt weaknesses to improve performance.
 
 2️⃣ For the Task 3 
 1. Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
 
 ## Key Report
-
+2025/4/8 16:00: Save the final results in `save_result.py` and compute ASR metric in `asr_computing.py`. 
 
 
 ## Originality
