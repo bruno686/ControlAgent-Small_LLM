@@ -2,7 +2,7 @@ import csv
 import os
 
 def save_result(final_result, current_filename):
-    csv_filename = f"{current_filename}_final_result.csv"
+    csv_filename = f"{current_filename}_final_result_1-5B_finetuning.csv"
 
     file_exists = os.path.isfile(csv_filename)
 

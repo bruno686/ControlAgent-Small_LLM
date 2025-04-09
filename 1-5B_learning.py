@@ -1,61 +1,86 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
 from datasets import load_dataset
+from peft import LoraConfig, get_peft_model, TaskType, PeftModel
 
 # 1. 加载模型和分词器
-model_name = "../LLMs/qwen2.5-1.5b-instruct"  # 你的模型路径
+model_name = "../LLMs/qwen2.5-1.5b-instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
-# 2. 加载和预处理数据集
-dataset = load_dataset('json', data_files='trajectory_gpt.jsonl')
+# 2. 配置 LoRA
+lora_config = LoraConfig(
+    task_type=TaskType.CAUSAL_LM,
+    r=8,
+    lora_alpha=32,
+    lora_dropout=0.1,
+    target_modules=["q_proj", "v_proj"],
+    use_rslora=True,
+)
 
-# 拆分数据集为训练集和验证集（80% 训练，20% 验证）
+model = get_peft_model(model, lora_config)
+model.print_trainable_parameters()
+
+# 3. 加载和预处理数据集
+dataset = load_dataset('json', data_files='auto_control_datasets.jsonl')
 dataset = dataset['train'].train_test_split(test_size=0.2, seed=42)
 
 def preprocess_function(examples):
-    inputs = [f"### 问题: {prompt}\n### 回答: {completion}" for prompt, completion in zip(examples['prompt'], examples['completion'])]
+    inputs = [f"### Question: {prompt}\n### Answer: {completion}" for prompt, completion in zip(examples['prompt'], examples['completion'])]
     model_inputs = tokenizer(inputs, max_length=512, truncation=True, padding="max_length")
-    model_inputs["labels"] = model_inputs["input_ids"].copy()  # 自回归任务，labels与input_ids相同
+    model_inputs["labels"] = model_inputs["input_ids"].copy()
     return model_inputs
 
 tokenized_dataset = dataset.map(preprocess_function, batched=True, remove_columns=['prompt', 'completion'])
 
-# 3. 设置训练参数
+# 4. 设置训练参数
 training_args = TrainingArguments(
     output_dir="./control_system_finetuned",
     overwrite_output_dir=True,
-    num_train_epochs=5,  
-    per_device_train_batch_size=2,  
-    gradient_accumulation_steps=1, 
-    save_strategy="epoch",  # 修改为与 eval_strategy 一致
-    save_total_limit=2,
+    num_train_epochs=3,
+    per_device_train_batch_size=2,
+    gradient_accumulation_steps=1,
+    save_strategy="epoch",
+    save_total_limit=5,
     logging_dir='./logs',
-    logging_steps=5,  
-    learning_rate=2e-5,  
-    weight_decay=0.01,  
-    fp16=True,  # 加速训练
-    eval_strategy="epoch",  # 更新为新参数名，每个 epoch 评估一次
-    per_device_eval_batch_size=4,  # 验证集批大小
-    load_best_model_at_end=True,  # 训练结束后加载最佳模型
-    metric_for_best_model="loss",  # 以验证集损失作为最佳模型标准
-    greater_is_better=False,  # 损失越小越好
+    logging_steps=5,
+    learning_rate=2e-4,
+    weight_decay=0.01,
+    fp16=True,
+    eval_strategy="epoch",
+    per_device_eval_batch_size=4,
+    load_best_model_at_end=True,
+    metric_for_best_model="loss",
+    greater_is_better=False,
 )
 
-# 4. 初始化Trainer
+# 5. 初始化 Trainer
 trainer = Trainer(
     model=model,
     args=training_args,
     train_dataset=tokenized_dataset['train'],
-    eval_dataset=tokenized_dataset['test'],  # 添加验证集
-    callbacks=None
+    eval_dataset=tokenized_dataset['test'],
 )
 
-# 5. 开始微调
+# 6. 开始微调
 trainer.train()
 
-# 6. 保存微调后的模型
-model.save_pretrained("./control_system_finetuned_model")
-tokenizer.save_pretrained("./control_system_finetuned_model")
+# 7. 合并 LoRA 权重到基础模型
+best_checkpoint = trainer.state.best_model_checkpoint
+if best_checkpoint:
+    print(f"Loading best checkpoint from: {best_checkpoint}")
+    # 重新加载基础模型
+    model = AutoModelForCausalLM.from_pretrained(model_name)
+    # 加载 LoRA checkpoint
+    model = PeftModel.from_pretrained(model, best_checkpoint)
+    # 合并权重
+    merged_model = model.merge_and_unload()
+else:
+    print("No best checkpoint found, merging final model state.")
+    merged_model = model.merge_and_unload()
 
-print("微调完成！模型已保存至 './control_system_finetuned_model'")
+# 8. 保存合并后的全参数模型
+merged_model.save_pretrained("./control_system_finetuned_model_merged")
+tokenizer.save_pretrained("./control_system_finetuned_model_merged")
+
+print("LoRA 微调完成并合并！完整模型已保存至 './control_system_finetuned_model_merged'")

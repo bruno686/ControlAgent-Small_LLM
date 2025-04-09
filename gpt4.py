@@ -18,9 +18,10 @@ class GPT4:
         self.engine = engine  
         # self.model = outlines.models.transformers("../LLMs/qwen2.5-1.5b-instruct", device_map="cuda", )
 
-        self.tokenizer = AutoTokenizer.from_pretrained("../LLMs/qwen2.5-1.5b-instruct", trust_remote_code=True)
+        self.model_path = "./control_system_finetuned_model_merged"
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_path, trust_remote_code=True)
         self.base_model = AutoModelForCausalLM.from_pretrained(
-            "../LLMs/qwen2.5-1.5b-instruct",
+            self.model_path,
             trust_remote_code=True,
             torch_dtype=torch.float16,   # 推荐 float16 节省显存
             device_map="cuda"            # 自动分配到 GPU
