@@ -29,9 +29,9 @@ This paper develops an agent for control design. In the paper, we have not inclu
 **2025/4/9 00:24**: Test for understanding of the basics: Chatgpt and grok determines whether LLM 1.5B has a correct understanding of knowledge related to automatic control. Asked the 1.5B model to answer questions like “What are settling time and phase margin in automatic control systems?”
 ChatGPT evaluated the answers and found them incorrect. Further verification using Grok confirmed that ChatGPT’s judgment was accurate. \
 **2025/4/9 00:37**: We need to distill accurate knowledge from more powerful models to help the 1.5B model learn effectively. \
-**2025/4/9 14:44**: ~~Language Agent Finetuning maybe a good idea. We can have the 1.5B LLM learn from GPT-4's reasoning trajectories.~~ 
-**2025/4/9 20:23**: Completed the initial version of code for fine-tuning a 1.5B parameter LLM `1-5B_learning.py`.
-**2025/4/9 22:26**: Based on the existing agent instructions, synthesize over 100 domain-specific data samples to ensure the model minimizes errors in domain-related knowledge `auto_control_datasets.jsonl`.
+**2025/4/9 14:44**: ~~Language Agent Finetuning maybe a good idea. We can have the 1.5B LLM learn from GPT-4's reasoning trajectories.~~ \
+**2025/4/9 20:23**: Completed the initial version of code for fine-tuning a 1.5B parameter LLM `1-5B_learning.py`. \
+**2025/4/9 22:26**: Based on the existing agent instructions, synthesize over 100 domain-specific data samples to ensure the model minimizes errors in domain-related knowledge `auto_control_datasets.jsonl`. \
 
 
 ## Originality
