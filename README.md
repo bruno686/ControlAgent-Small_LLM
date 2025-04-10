@@ -16,7 +16,14 @@ This paper develops an agent for control design. In the paper, we have not inclu
 ✅ Based on that analysis, consider targeted solutions—such as fine-tuning or prompt engineering. (By synthesizing 139 domain data, a 2% improvement was achieved with 1.5B LLM, which was scaled up to 1000 in the next step.)
 
 3️⃣ **For the Task 3** \
-⌛️ Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
+✅ Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
+
+## Key Summay
+
+The guidance for synthetic data generation is based primarily on two sources: 
+1. An analysis of the knowledge and capabilities required to respond prompts;
+2. A systematic review and reflection on the model's previous incorrect responses. so bad
+
 
 ## Key Report 
 ------------------------------------------Task 1------------------------------------------ \
@@ -33,8 +40,17 @@ ChatGPT evaluated the answers and found them incorrect. Further verification usi
 **2025/4/9 20:23**: Completed the initial version of code for fine-tuning a 1.5B parameter LLM `1-5B_learning.py`. \
 **2025/4/9 22:26**: Based on the existing agent instructions, synthesize over 100 domain-specific data samples to ensure the model minimizes errors in domain-related knowledge `auto_control_datasets.jsonl`. \
 **2025/4/10 02:08**: With 139 synthesized data, the effect goes from 0.14 to 0.16 (`first_order_stable_fast_data_final_result_1-5B_finetuning.csv`)and is about to expand to 1000 synthesized data. There was a language confusion problem, but it was solved by using the Lora. \
-------------------------------------------Task 3------------------------------------------ 
+**2025/4/10 14:40**: Tried generating more datasets but no better to improve results. \
+------------------------------------------Task 3------------------------------------------ \
+**2025/4/10 17:34**: For circuit design, the essence is the same.
 
+## Reference
+* [Fine-Tuning Small Language Models: Practical Recommendations](https://medium.com/@liana.napalkova/fine-tuning-small-language-models-practical-recommendations-68f32b0535ca)
+* [T1: Tool-integrated Self-verification for Test-time Compute Scaling in Small Language Models](https://arxiv.org/pdf/2504.04718)
+* [Unveiling the Secret Recipe: A Guide For Supervised Fine-Tuning Small LLMs ](https://arxiv.org/abs/2412.13337)
+* [Small Models Struggle to Learn from Strong Reasoners](https://arxiv.org/pdf/2502.12143)
+* [rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking](https://arxiv.org/pdf/2501.04519)
+* [Agent-R: Training Language Model Agents to Reflect via Iterative Self-Training](https://arxiv.org/abs/2501.11425)
 
 ## Originality
 

@@ -19,7 +19,7 @@ def process_dataset(file_path):
     with open(file_path, 'r') as f:
         dataset = json.load(f)
     # zz: we need get all data
-    for system in dataset[32:]:  # Loop through first two systems; adjust as necessary
+    for system in dataset:  # Loop through first two systems; adjust as necessary
         scenario = system['scenario']
         # Provide the plant transfer function
         num = [system['num'][0]]
