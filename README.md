@@ -19,10 +19,8 @@ This paper develops an agent for control design. In the paper, we have not inclu
 ✅ Essentially, it’s about designing different workflows for the LLM to process data and invoke tools, based on the specific tasks.
 
 ## Key Summay
-
-The guidance for synthetic data generation is based primarily on two sources: 
-1. An analysis of the knowledge and capabilities required to respond prompts;
-2. A systematic review and reflection on the model's previous incorrect responses. so bad
+**1 Foundation Building**: Completed evaluation code and implementation of small model inference, as well as constraint-based text formatting and generation. \
+**2 1.5B LLM Enhancement**: Synthesized datasets based on prompts and errors to further enhance the small model.
 
 
 ## Key Report 
